@@ -26,6 +26,7 @@ public class Window extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        LayeredPane = new javax.swing.JLayeredPane();
         LoginPanel = new javax.swing.JPanel();
         WelcomeLabel = new javax.swing.JLabel();
         SubLabel = new javax.swing.JLabel();
@@ -43,7 +44,6 @@ public class Window extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1280, 720));
         setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
-        getContentPane().setLayout(new java.awt.CardLayout());
 
         WelcomeLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         WelcomeLabel.setText("Database Manager Tool");
@@ -97,7 +97,11 @@ public class Window extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(LoginPanel, "card1");
+        LayeredPane.add(LoginPanel);
+        LoginPanel.setBounds(0, 0, 1280, 720);
+
+        AppScreen.setMaximumSize(new java.awt.Dimension(1280, 720));
+        AppScreen.setPreferredSize(new java.awt.Dimension(1280, 720));
 
         AppNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         AppNameLabel.setText("Database Management Tool");
@@ -134,7 +138,7 @@ public class Window extends javax.swing.JFrame {
         RightPane.setLayout(RightPaneLayout);
         RightPaneLayout.setHorizontalGroup(
             RightPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1125, Short.MAX_VALUE)
+            .addGap(0, 1109, Short.MAX_VALUE)
         );
         RightPaneLayout.setVerticalGroup(
             RightPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +155,7 @@ public class Window extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(AppNameLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(SplitPane)
+            .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1264, Short.MAX_VALUE)
         );
         AppScreenLayout.setVerticalGroup(
             AppScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +166,19 @@ public class Window extends javax.swing.JFrame {
                 .addComponent(SplitPane))
         );
 
-        getContentPane().add(AppScreen, "card2");
+        LayeredPane.add(AppScreen);
+        AppScreen.setBounds(0, 0, 1280, 720);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(LayeredPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(LayeredPane, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -210,6 +226,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel AppNameLabel;
     private javax.swing.JPanel AppScreen;
     private javax.swing.JTree FileTree;
+    private javax.swing.JLayeredPane LayeredPane;
     private javax.swing.JScrollPane LeftPane;
     private javax.swing.JButton LoginButton;
     private javax.swing.JPanel LoginPanel;
