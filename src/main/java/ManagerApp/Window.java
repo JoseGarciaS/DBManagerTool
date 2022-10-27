@@ -4,6 +4,12 @@
  */
 package ManagerApp;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
 /**
  *
  * @author bounc
@@ -13,8 +19,14 @@ public class Window extends javax.swing.JFrame {
     /**
      * Creates new form Window
      */
+    private int cont = 0;
+    private DefaultTreeModel modelo;
+    DefaultMutableTreeNode selectedNode;
+    DataBase basePrueba;
+
     public Window() {
         initComponents();
+        modelo = (DefaultTreeModel) FileTree.getModel();
     }
 
     /**
@@ -27,78 +39,22 @@ public class Window extends javax.swing.JFrame {
     private void initComponents() {
 
         LayeredPane = new javax.swing.JLayeredPane();
-        LoginPanel = new javax.swing.JPanel();
-        WelcomeLabel = new javax.swing.JLabel();
-        SubLabel = new javax.swing.JLabel();
-        LoginButton = new javax.swing.JButton();
-        UsernameField = new javax.swing.JTextField();
-        PasswordField = new javax.swing.JPasswordField();
         AppScreen = new javax.swing.JPanel();
         AppNameLabel = new javax.swing.JLabel();
         SplitPane = new javax.swing.JSplitPane();
         LeftPane = new javax.swing.JScrollPane();
         FileTree = new javax.swing.JTree();
         RightPane = new javax.swing.JPanel();
+        LoginPanel = new javax.swing.JPanel();
+        WelcomeLabel = new javax.swing.JLabel();
+        SubLabel = new javax.swing.JLabel();
+        LoginButton = new javax.swing.JButton();
+        UsernameField = new javax.swing.JTextField();
+        PasswordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
-
-        WelcomeLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        WelcomeLabel.setText("Database Manager Tool");
-
-        SubLabel.setText("Temporal login");
-
-        LoginButton.setText("Login");
-
-        UsernameField.setText("Username");
-        UsernameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsernameFieldActionPerformed(evt);
-            }
-        });
-
-        PasswordField.setText("password");
-
-        javax.swing.GroupLayout LoginPanelLayout = new javax.swing.GroupLayout(LoginPanel);
-        LoginPanel.setLayout(LoginPanelLayout);
-        LoginPanelLayout.setHorizontalGroup(
-            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LoginPanelLayout.createSequentialGroup()
-                .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(LoginPanelLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(SubLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(WelcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(LoginPanelLayout.createSequentialGroup()
-                        .addGap(504, 504, 504)
-                        .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(UsernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                .addComponent(PasswordField)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        LoginPanelLayout.setVerticalGroup(
-            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LoginPanelLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(WelcomeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SubLabel)
-                .addGap(152, 152, 152)
-                .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(LoginButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        LayeredPane.add(LoginPanel);
-        LoginPanel.setBounds(0, 0, 1280, 720);
 
         AppScreen.setMaximumSize(new java.awt.Dimension(1280, 720));
         AppScreen.setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -108,28 +64,33 @@ public class Window extends javax.swing.JFrame {
 
         SplitPane.setDividerLocation(150);
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Home");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Tables");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Views");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Packages");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Saved Processes");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Functions");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Secuences");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Triggers");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Indexes");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Tablespaces");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Users");
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Bases");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("BasePrueba");
+        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Tables");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Views");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Packages");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Saved Processes");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Functions");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Secuences");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Triggers");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Indexes");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Users");
+        treeNode2.add(treeNode3);
         treeNode1.add(treeNode2);
         FileTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        FileTree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FileTreeMouseClicked(evt);
+            }
+        });
         LeftPane.setViewportView(FileTree);
 
         SplitPane.setLeftComponent(LeftPane);
@@ -166,8 +127,97 @@ public class Window extends javax.swing.JFrame {
                 .addComponent(SplitPane))
         );
 
+        LayeredPane.setLayer(AppScreen, javax.swing.JLayeredPane.DRAG_LAYER);
         LayeredPane.add(AppScreen);
         AppScreen.setBounds(0, 0, 1280, 720);
+
+        LoginPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginPanelMouseClicked(evt);
+            }
+        });
+
+        WelcomeLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        WelcomeLabel.setText("Database Manager Tool");
+        WelcomeLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                WelcomeLabelMouseClicked(evt);
+            }
+        });
+
+        SubLabel.setText("Temporal login");
+
+        LoginButton.setText("Login");
+        LoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginButtonActionPerformed(evt);
+            }
+        });
+
+        UsernameField.setText("Username");
+        UsernameField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                UsernameFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                UsernameFieldFocusLost(evt);
+            }
+        });
+        UsernameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UsernameFieldActionPerformed(evt);
+            }
+        });
+
+        PasswordField.setText("password");
+        PasswordField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                PasswordFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                PasswordFieldFocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout LoginPanelLayout = new javax.swing.GroupLayout(LoginPanel);
+        LoginPanel.setLayout(LoginPanelLayout);
+        LoginPanelLayout.setHorizontalGroup(
+            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LoginPanelLayout.createSequentialGroup()
+                .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LoginPanelLayout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(SubLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(WelcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(LoginPanelLayout.createSequentialGroup()
+                        .addGap(504, 504, 504)
+                        .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(UsernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addComponent(PasswordField)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        LoginPanelLayout.setVerticalGroup(
+            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LoginPanelLayout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(WelcomeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SubLabel)
+                .addGap(146, 146, 146)
+                .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(LoginButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        LayeredPane.setLayer(LoginPanel, javax.swing.JLayeredPane.MODAL_LAYER);
+        LayeredPane.add(LoginPanel);
+        LoginPanel.setBounds(0, 0, 1280, 720);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -186,6 +236,189 @@ public class Window extends javax.swing.JFrame {
     private void UsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UsernameFieldActionPerformed
+
+    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
+        System.out.println(UsernameField.getText());
+        System.out.println(PasswordField.getPassword());
+        if (UsernameField.getText().equals("admin") && PasswordField.getText().equals("admin")) {
+            LoginPanel.setVisible(false);
+        }
+    }//GEN-LAST:event_LoginButtonActionPerformed
+
+    private void UsernameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UsernameFieldFocusGained
+        if (UsernameField.getText().equals("Username")) {
+            UsernameField.setText("");
+        }
+    }//GEN-LAST:event_UsernameFieldFocusGained
+
+    private void PasswordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PasswordFieldFocusGained
+        if (PasswordField.getText().equals("password")) {
+            PasswordField.setText("");
+        }
+    }//GEN-LAST:event_PasswordFieldFocusGained
+
+    private void UsernameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UsernameFieldFocusLost
+        if (UsernameField.getText().equals("")) {
+            UsernameField.setText("Username");
+        }
+    }//GEN-LAST:event_UsernameFieldFocusLost
+
+    private void PasswordFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PasswordFieldFocusLost
+        if (PasswordField.getText().equals("")) {
+            PasswordField.setText("password");
+        }
+    }//GEN-LAST:event_PasswordFieldFocusLost
+
+    private void LoginPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginPanelMouseClicked
+        WelcomeLabel.grabFocus();
+    }//GEN-LAST:event_LoginPanelMouseClicked
+
+    private void WelcomeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_WelcomeLabelMouseClicked
+        WelcomeLabel.grabFocus();
+    }//GEN-LAST:event_WelcomeLabelMouseClicked
+
+    private void FileTreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FileTreeMouseClicked
+        try {
+            /*cont++;
+            if (cont == 2) {
+            System.out.println(FileTree.getSelectionPath());
+            FileTree.expandPath(FileTree.getSelectionPath());
+            FileTree.expandRow(1);
+            cont = 0;
+            }*/
+            int indice = FileTree.getRowForPath(FileTree.getSelectionPath());
+            FileTree.setSelectionRow(2);
+            selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+
+            if (modelo.getChildCount(selectedNode) == 0) {
+                basePrueba = new DataBase("//olimpo.dscloud.biz:1433//firebird/data/", "base.fdb", "SYSDBA", "masterkey");
+                // Carga de Tablas
+                ResultSet res = basePrueba.query("""
+                                                    select rdb$relation_name
+                                                    from rdb$relations
+                                                    where rdb$view_blr is null
+                                                    and (rdb$system_flag is null or rdb$system_flag = 0);
+                                                """);
+                int cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    System.out.println(res.getNString(1));
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // Carga de Vistas
+                FileTree.setSelectionRow(3);
+                res = basePrueba.query("""
+                                        select rdb$relation_name
+                                        from rdb$relations
+                                        where rdb$view_blr is not null
+                                        and (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    System.out.println(res.getNString(1));
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // Carga de Paquetes
+                FileTree.setSelectionRow(4);
+                res = basePrueba.query("""
+                                        select RDB$PACKAGE_NAME
+                                        from RDB$PACKAGES
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    System.out.println(res.getNString(1));
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // Carga de Procedimientos Almacenados
+                FileTree.setSelectionRow(5);
+                res = basePrueba.query("""
+                                        select RDB$PROCEDURE_NAME
+                                        from RDB$PROCEDURES
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    System.out.println(res.getNString(1));
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // Carga de Funciones
+                FileTree.setSelectionRow(6);
+                res = basePrueba.query("""
+                                        select RDB$FUNCTION_NAME
+                                        from RDB$FUNCTIONS
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    System.out.println(res.getNString(1));
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // Carga de Generadores
+                FileTree.setSelectionRow(7);
+                res = basePrueba.query("""
+                                        select RDB$GENERATOR_NAME
+                                        from RDB$GENERATORS
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    System.out.println(res.getNString(1));
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // Carga de Triggers
+                FileTree.setSelectionRow(8);
+                res = basePrueba.query("""
+                                        select RDB$TRIGGER_NAME
+                                        from RDB$TRIGGERS
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    System.out.println(res.getNString(1));
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // Carga de Usuarios
+                FileTree.setSelectionRow(10);
+                res = basePrueba.query("""
+                                        select SEC$USER_NAME
+                                        from SEC$USERS;
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    System.out.println(res.getNString(1));
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+            } else {
+                FileTree.setSelectionRow(indice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_FileTreeMouseClicked
 
     /**
      * @param args the command line arguments
