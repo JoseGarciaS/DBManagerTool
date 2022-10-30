@@ -7,6 +7,11 @@ package ManagerApp;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -39,97 +44,29 @@ public class Window extends javax.swing.JFrame {
     private void initComponents() {
 
         LayeredPane = new javax.swing.JLayeredPane();
-        AppScreen = new javax.swing.JPanel();
-        AppNameLabel = new javax.swing.JLabel();
-        SplitPane = new javax.swing.JSplitPane();
-        LeftPane = new javax.swing.JScrollPane();
-        FileTree = new javax.swing.JTree();
-        RightPane = new javax.swing.JPanel();
         LoginPanel = new javax.swing.JPanel();
         WelcomeLabel = new javax.swing.JLabel();
         SubLabel = new javax.swing.JLabel();
         LoginButton = new javax.swing.JButton();
         UsernameField = new javax.swing.JTextField();
         PasswordField = new javax.swing.JPasswordField();
+        NewUserButton = new javax.swing.JButton();
+        Sessions = new javax.swing.JTabbedPane();
+        AppScreen = new javax.swing.JPanel();
+        SplitPane = new javax.swing.JSplitPane();
+        RightPane = new javax.swing.JPanel();
+        LeftPane = new javax.swing.JPanel();
+        JTreePane = new javax.swing.JScrollPane();
+        FileTree = new javax.swing.JTree();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        MenuBar = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
-
-        AppScreen.setMaximumSize(new java.awt.Dimension(1280, 720));
-        AppScreen.setPreferredSize(new java.awt.Dimension(1280, 720));
-
-        AppNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        AppNameLabel.setText("Database Management Tool");
-
-        SplitPane.setDividerLocation(150);
-
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Bases");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("BasePrueba");
-        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Tables");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Views");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Packages");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Saved Processes");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Functions");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Secuences");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Triggers");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Indexes");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Users");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        FileTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        FileTree.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                FileTreeMouseClicked(evt);
-            }
-        });
-        LeftPane.setViewportView(FileTree);
-
-        SplitPane.setLeftComponent(LeftPane);
-
-        javax.swing.GroupLayout RightPaneLayout = new javax.swing.GroupLayout(RightPane);
-        RightPane.setLayout(RightPaneLayout);
-        RightPaneLayout.setHorizontalGroup(
-            RightPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1109, Short.MAX_VALUE)
-        );
-        RightPaneLayout.setVerticalGroup(
-            RightPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 676, Short.MAX_VALUE)
-        );
-
-        SplitPane.setRightComponent(RightPane);
-
-        javax.swing.GroupLayout AppScreenLayout = new javax.swing.GroupLayout(AppScreen);
-        AppScreen.setLayout(AppScreenLayout);
-        AppScreenLayout.setHorizontalGroup(
-            AppScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AppScreenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(AppNameLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1264, Short.MAX_VALUE)
-        );
-        AppScreenLayout.setVerticalGroup(
-            AppScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AppScreenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(AppNameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SplitPane))
-        );
-
-        LayeredPane.setLayer(AppScreen, javax.swing.JLayeredPane.DRAG_LAYER);
-        LayeredPane.add(AppScreen);
-        AppScreen.setBounds(0, 0, 1280, 720);
 
         LoginPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -179,45 +116,175 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
+        NewUserButton.setText("Create new user");
+        NewUserButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                NewUserButtonMouseClicked(evt);
+            }
+        });
+        NewUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewUserButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout LoginPanelLayout = new javax.swing.GroupLayout(LoginPanel);
         LoginPanel.setLayout(LoginPanelLayout);
         LoginPanelLayout.setHorizontalGroup(
             LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginPanelLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
                 .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(LoginPanelLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(SubLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(WelcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(LoginPanelLayout.createSequentialGroup()
-                        .addGap(504, 504, 504)
+                        .addComponent(NewUserButton)
+                        .addGap(329, 329, 329)
                         .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(UsernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                .addComponent(PasswordField)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(PasswordField))))
+                    .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(SubLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(WelcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(656, Short.MAX_VALUE))
         );
         LoginPanelLayout.setVerticalGroup(
             LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginPanelLayout.createSequentialGroup()
                 .addGap(63, 63, 63)
-                .addComponent(WelcomeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SubLabel)
-                .addGap(146, 146, 146)
-                .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(LoginPanelLayout.createSequentialGroup()
+                        .addComponent(WelcomeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SubLabel)
+                        .addGap(146, 146, 146)
+                        .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(NewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(LoginButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(350, Short.MAX_VALUE))
         );
 
-        LayeredPane.setLayer(LoginPanel, javax.swing.JLayeredPane.MODAL_LAYER);
+        LayeredPane.setLayer(LoginPanel, javax.swing.JLayeredPane.PALETTE_LAYER);
         LayeredPane.add(LoginPanel);
         LoginPanel.setBounds(0, 0, 1280, 720);
+
+        AppScreen.setMaximumSize(new java.awt.Dimension(1280, 720));
+        AppScreen.setPreferredSize(new java.awt.Dimension(1280, 720));
+
+        SplitPane.setDividerLocation(150);
+
+        javax.swing.GroupLayout RightPaneLayout = new javax.swing.GroupLayout(RightPane);
+        RightPane.setLayout(RightPaneLayout);
+        RightPaneLayout.setHorizontalGroup(
+            RightPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1125, Short.MAX_VALUE)
+        );
+        RightPaneLayout.setVerticalGroup(
+            RightPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 683, Short.MAX_VALUE)
+        );
+
+        SplitPane.setRightComponent(RightPane);
+
+        LeftPane.setLayout(null);
+
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Bases");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("BasePrueba");
+        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Tables");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Views");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Packages");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Saved Processes");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Functions");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Secuences");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Triggers");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Indexes");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Users");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        FileTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        FileTree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FileTreeMouseClicked(evt);
+            }
+        });
+        JTreePane.setViewportView(FileTree);
+
+        LeftPane.add(JTreePane);
+        JTreePane.setBounds(0, 0, 150, 400);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Field", "Type"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        LeftPane.add(jScrollPane1);
+        jScrollPane1.setBounds(0, 400, 150, 320);
+
+        SplitPane.setLeftComponent(LeftPane);
+
+        javax.swing.GroupLayout AppScreenLayout = new javax.swing.GroupLayout(AppScreen);
+        AppScreen.setLayout(AppScreenLayout);
+        AppScreenLayout.setHorizontalGroup(
+            AppScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(SplitPane)
+        );
+        AppScreenLayout.setVerticalGroup(
+            AppScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AppScreenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(SplitPane))
+        );
+
+        Sessions.addTab("tab1", AppScreen);
+
+        LayeredPane.add(Sessions);
+        Sessions.setBounds(0, 0, 1280, 720);
+
+        jMenu2.setText("File");
+        MenuBar.add(jMenu2);
+
+        jMenu3.setText("Edit");
+        MenuBar.add(jMenu3);
+
+        setJMenuBar(MenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -281,10 +348,10 @@ public class Window extends javax.swing.JFrame {
         try {
             /*cont++;
             if (cont == 2) {
-            System.out.println(FileTree.getSelectionPath());
-            FileTree.expandPath(FileTree.getSelectionPath());
-            FileTree.expandRow(1);
-            cont = 0;
+                System.out.println(FileTree.getSelectionPath());
+                FileTree.expandPath(FileTree.getSelectionPath());
+                FileTree.expandRow(1);
+                cont = 0;
             }*/
             int indice = FileTree.getRowForPath(FileTree.getSelectionPath());
             FileTree.setSelectionRow(2);
@@ -294,131 +361,154 @@ public class Window extends javax.swing.JFrame {
                 basePrueba = new DataBase("//olimpo.dscloud.biz:1433//firebird/data/", "base.fdb", "SYSDBA", "masterkey");
                 // Carga de Tablas
                 ResultSet res = basePrueba.query("""
-                                                    select rdb$relation_name
-                                                    from rdb$relations
-                                                    where rdb$view_blr is null
-                                                    and (rdb$system_flag is null or rdb$system_flag = 0);
-                                                """);
-                int cnt = 0;
-                while (res.next()) {
-                    cnt++;
-                    System.out.println(res.getNString(1));
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
-                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
-                    modelo.insertNodeInto(n, selectedNode, 0);
-                }
-                // Carga de Vistas
-                FileTree.setSelectionRow(3);
-                res = basePrueba.query("""
-                                        select rdb$relation_name
-                                        from rdb$relations
-                                        where rdb$view_blr is not null
-                                        and (rdb$system_flag is null or rdb$system_flag = 0);
+                    select rdb$relation_name
+                    from rdb$relations
+                    where rdb$view_blr is null
+                    and (rdb$system_flag is null or rdb$system_flag = 0);
+                    """);
+                    int cnt = 0;
+                    while (res.next()) {
+                        cnt++;
+                        System.out.println(res.getNString(1));
+                        DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                        selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                        modelo.insertNodeInto(n, selectedNode, 0);
+                    }
+                    // Carga de Vistas
+                    FileTree.setSelectionRow(3);
+                    res = basePrueba.query("""
+                        select rdb$relation_name
+                        from rdb$relations
+                        where rdb$view_blr is not null
+                        and (rdb$system_flag is null or rdb$system_flag = 0);
+                        """);
+                        cnt = 0;
+                        while (res.next()) {
+                            cnt++;
+                            System.out.println(res.getNString(1));
+                            DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                            selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                            modelo.insertNodeInto(n, selectedNode, 0);
+                        }
+                        // Carga de Paquetes
+                        FileTree.setSelectionRow(4);
+                        res = basePrueba.query("""
+                            select RDB$PACKAGE_NAME
+                            from RDB$PACKAGES
+                            where (rdb$system_flag is null or rdb$system_flag = 0);
+                            """);
+                            cnt = 0;
+                            while (res.next()) {
+                                cnt++;
+                                System.out.println(res.getNString(1));
+                                DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                                selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                                modelo.insertNodeInto(n, selectedNode, 0);
+                            }
+                            // Carga de Procedimientos Almacenados
+                            FileTree.setSelectionRow(5);
+                            res = basePrueba.query("""
+                                select RDB$PROCEDURE_NAME
+                                from RDB$PROCEDURES
+                                where (rdb$system_flag is null or rdb$system_flag = 0);
+                                """);
+                                cnt = 0;
+                                while (res.next()) {
+                                    cnt++;
+                                    System.out.println(res.getNString(1));
+                                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                                    modelo.insertNodeInto(n, selectedNode, 0);
+                                }
+                                // Carga de Funciones
+                                FileTree.setSelectionRow(6);
+                                res = basePrueba.query("""
+                                    select RDB$FUNCTION_NAME
+                                    from RDB$FUNCTIONS
+                                    where (rdb$system_flag is null or rdb$system_flag = 0);
                                     """);
-                cnt = 0;
-                while (res.next()) {
-                    cnt++;
-                    System.out.println(res.getNString(1));
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
-                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
-                    modelo.insertNodeInto(n, selectedNode, 0);
-                }
-                // Carga de Paquetes
-                FileTree.setSelectionRow(4);
-                res = basePrueba.query("""
-                                        select RDB$PACKAGE_NAME
-                                        from RDB$PACKAGES
-                                        where (rdb$system_flag is null or rdb$system_flag = 0);
-                                    """);
-                cnt = 0;
-                while (res.next()) {
-                    cnt++;
-                    System.out.println(res.getNString(1));
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
-                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
-                    modelo.insertNodeInto(n, selectedNode, 0);
-                }
-                // Carga de Procedimientos Almacenados
-                FileTree.setSelectionRow(5);
-                res = basePrueba.query("""
-                                        select RDB$PROCEDURE_NAME
-                                        from RDB$PROCEDURES
-                                        where (rdb$system_flag is null or rdb$system_flag = 0);
-                                    """);
-                cnt = 0;
-                while (res.next()) {
-                    cnt++;
-                    System.out.println(res.getNString(1));
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
-                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
-                    modelo.insertNodeInto(n, selectedNode, 0);
-                }
-                // Carga de Funciones
-                FileTree.setSelectionRow(6);
-                res = basePrueba.query("""
-                                        select RDB$FUNCTION_NAME
-                                        from RDB$FUNCTIONS
-                                        where (rdb$system_flag is null or rdb$system_flag = 0);
-                                    """);
-                cnt = 0;
-                while (res.next()) {
-                    cnt++;
-                    System.out.println(res.getNString(1));
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
-                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
-                    modelo.insertNodeInto(n, selectedNode, 0);
-                }
-                // Carga de Generadores
-                FileTree.setSelectionRow(7);
-                res = basePrueba.query("""
+                                    cnt = 0;
+                                    while (res.next()) {
+                                        cnt++;
+                                        System.out.println(res.getNString(1));
+                                        DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                                        selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                                        modelo.insertNodeInto(n, selectedNode, 0);
+                                    }
+                                    // Carga de Generadores
+                                    FileTree.setSelectionRow(7);
+                                    res = basePrueba.query("""
                                         select RDB$GENERATOR_NAME
                                         from RDB$GENERATORS
                                         where (rdb$system_flag is null or rdb$system_flag = 0);
-                                    """);
-                cnt = 0;
-                while (res.next()) {
-                    cnt++;
-                    System.out.println(res.getNString(1));
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
-                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
-                    modelo.insertNodeInto(n, selectedNode, 0);
-                }
-                // Carga de Triggers
-                FileTree.setSelectionRow(8);
-                res = basePrueba.query("""
-                                        select RDB$TRIGGER_NAME
-                                        from RDB$TRIGGERS
-                                        where (rdb$system_flag is null or rdb$system_flag = 0);
-                                    """);
-                cnt = 0;
-                while (res.next()) {
-                    cnt++;
-                    System.out.println(res.getNString(1));
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
-                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
-                    modelo.insertNodeInto(n, selectedNode, 0);
-                }
-                // Carga de Usuarios
-                FileTree.setSelectionRow(10);
-                res = basePrueba.query("""
-                                        select SEC$USER_NAME
-                                        from SEC$USERS;
-                                    """);
-                cnt = 0;
-                while (res.next()) {
-                    cnt++;
-                    System.out.println(res.getNString(1));
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
-                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
-                    modelo.insertNodeInto(n, selectedNode, 0);
-                }
-            } else {
-                FileTree.setSelectionRow(indice);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                                        """);
+                                        cnt = 0;
+                                        while (res.next()) {
+                                            cnt++;
+                                            System.out.println(res.getNString(1));
+                                            DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                                            selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                                            modelo.insertNodeInto(n, selectedNode, 0);
+                                        }
+                                        // Carga de Triggers
+                                        FileTree.setSelectionRow(8);
+                                        res = basePrueba.query("""
+                                            select RDB$TRIGGER_NAME
+                                            from RDB$TRIGGERS
+                                            where (rdb$system_flag is null or rdb$system_flag = 0);
+                                            """);
+                                            cnt = 0;
+                                            while (res.next()) {
+                                                cnt++;
+                                                System.out.println(res.getNString(1));
+                                                DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                                                selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                                                modelo.insertNodeInto(n, selectedNode, 0);
+                                            }
+                                            // Carga de Usuarios
+                                            FileTree.setSelectionRow(10);
+                                            res = basePrueba.query("""
+                                                select SEC$USER_NAME
+                                                from SEC$USERS;
+                                                """);
+                                                cnt = 0;
+                                                while (res.next()) {
+                                                    cnt++;
+                                                    System.out.println(res.getNString(1));
+                                                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                                                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                                                    modelo.insertNodeInto(n, selectedNode, 0);
+                                                }
+                                            } else {
+                                                FileTree.setSelectionRow(indice);
+                                            }
+                                        } catch (SQLException ex) {
+                                            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
     }//GEN-LAST:event_FileTreeMouseClicked
+
+    private void NewUserButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewUserButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NewUserButtonMouseClicked
+
+    private void NewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewUserButtonActionPerformed
+        
+      JTextField username = new JTextField();
+      JTextField password = new JPasswordField();
+      JTextField hostname = new JTextField();
+      JTextField port = new JTextField();
+      
+      Object[] message = {
+        "Username:", username,
+          "Password:", password,
+          "Host name:", hostname,
+          "Port: ", port
+    };
+      
+       JOptionPane.showMessageDialog(new JPanel(), message);
+      
+
+    }//GEN-LAST:event_NewUserButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -456,18 +546,25 @@ public class Window extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel AppNameLabel;
     private javax.swing.JPanel AppScreen;
     private javax.swing.JTree FileTree;
+    private javax.swing.JScrollPane JTreePane;
     private javax.swing.JLayeredPane LayeredPane;
-    private javax.swing.JScrollPane LeftPane;
+    private javax.swing.JPanel LeftPane;
     private javax.swing.JButton LoginButton;
     private javax.swing.JPanel LoginPanel;
+    private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JButton NewUserButton;
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JPanel RightPane;
+    private javax.swing.JTabbedPane Sessions;
     private javax.swing.JSplitPane SplitPane;
     private javax.swing.JLabel SubLabel;
     private javax.swing.JTextField UsernameField;
     private javax.swing.JLabel WelcomeLabel;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
