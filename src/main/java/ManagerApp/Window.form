@@ -95,7 +95,7 @@
                               <Component id="WelcomeLabel" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="656" max="32767" attributes="0"/>
+                      <EmptySpace pref="617" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -171,7 +171,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="NewUserButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Create new user"/>
+                <Property name="text" type="java.lang.String" value="Create New Connection"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="NewUserButtonMouseClicked"/>
@@ -261,6 +261,9 @@
                       </Layout>
                       <SubComponents>
                         <Container class="javax.swing.JScrollPane" name="JTreePane">
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="JTreePaneMouseClicked"/>
+                          </Events>
                           <AuxValues>
                             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                           </AuxValues>
@@ -333,7 +336,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="AppScreen">
+        <Container class="javax.swing.JPanel" name="AppScreen1">
           <Properties>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[1280, 720]"/>
@@ -356,7 +359,7 @@
                       <Component id="AppNameLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Component id="SplitPane" alignment="0" pref="1264" max="32767" attributes="0"/>
+                  <Component id="SplitPane1" alignment="0" pref="1264" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -365,7 +368,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="AppNameLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="SplitPane" max="32767" attributes="0"/>
+                      <Component id="SplitPane1" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -379,14 +382,14 @@
                 <Property name="text" type="java.lang.String" value="Database Management Tool"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JSplitPane" name="SplitPane">
+            <Container class="javax.swing.JSplitPane" name="SplitPane1">
               <Properties>
                 <Property name="dividerLocation" type="int" value="150"/>
               </Properties>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
               <SubComponents>
-                <Container class="javax.swing.JScrollPane" name="LeftPane">
+                <Container class="javax.swing.JScrollPane" name="LeftPane1">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                   </AuxValues>
@@ -398,7 +401,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTree" name="FileTree">
+                    <Component class="javax.swing.JTree" name="FileTree1">
                       <Properties>
                         <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
                           <TreeModel code="Bases&#xa; BasePrueba&#xa;  Tables&#xa;  Views&#xa;  Packages&#xa;  Saved Processes&#xa;  Functions&#xa;  Secuences&#xa;  Triggers&#xa;  Indexes&#xa;  Users"/>
@@ -410,7 +413,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="RightPane">
+                <Container class="javax.swing.JPanel" name="RightPane1">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                       <JSplitPaneConstraints position="right"/>

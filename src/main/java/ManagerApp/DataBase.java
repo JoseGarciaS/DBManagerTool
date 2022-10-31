@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 public class DataBase {
 
     private String path;
-    private String name;
+    private String alias;
 
     private Properties props;
 
@@ -25,7 +25,7 @@ public class DataBase {
         props = new Properties();
         
         this.path = path;
-        this.name = name;
+        this.alias = name;
 
         props.setProperty("user", user);
         props.setProperty("password", password);
@@ -63,7 +63,7 @@ public class DataBase {
         try {
             Class.forName("org.firebirdsql.jdbc.FBDriver");
             Connection connection = DriverManager.getConnection(
-                    "jdbc:firebirdsql://"+path+name,
+                    "jdbc:firebirdsql://"+path,
                     props);
             return connection;
         } catch (SQLException | ClassNotFoundException ex) {
