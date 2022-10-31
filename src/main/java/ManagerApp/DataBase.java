@@ -23,6 +23,9 @@ public class DataBase {
 
     public DataBase(String path, String name, String user, String password) {
         props = new Properties();
+        
+        this.path = path;
+        this.name = name;
 
         props.setProperty("user", user);
         props.setProperty("password", password);
@@ -60,7 +63,7 @@ public class DataBase {
         try {
             Class.forName("org.firebirdsql.jdbc.FBDriver");
             Connection connection = DriverManager.getConnection(
-                    "jdbc:firebirdsql://olimpo.dscloud.biz:1433//firebird/data/base.fdb",
+                    "jdbc:firebirdsql://"+path+name,
                     props);
             return connection;
         } catch (SQLException | ClassNotFoundException ex) {

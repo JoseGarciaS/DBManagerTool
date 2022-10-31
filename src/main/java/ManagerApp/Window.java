@@ -7,13 +7,18 @@ package ManagerApp;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+<<<<<<< Updated upstream
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+=======
+import javax.swing.text.Position;
+>>>>>>> Stashed changes
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,6 +38,185 @@ public class Window extends javax.swing.JFrame {
         initComponents();
         modelo = (DefaultTreeModel) FileTree.getModel();
     }
+    
+    private void log () {
+        System.out.println(UsernameField.getText());
+        System.out.println(PasswordField.getPassword());
+        if (UsernameField.getText().equals("admin") && PasswordField.getText().equals("admin")) {
+            LoginPanel.setVisible(false);
+        }
+    }
+    
+    private void loadDataBase(String dataBaseAlias) {
+        try {
+            int indice = FileTree.getRowForPath(FileTree.getSelectionPath());
+            int dataBaseIndex = FileTree.getRowForPath(FileTree.getNextMatch(dataBaseAlias, 0, Position.Bias.Forward));
+            FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Tables", dataBaseIndex, Position.Bias.Forward)));
+            selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+
+            if (modelo.getChildCount(selectedNode) == 0) {
+                basePrueba = new DataBase("localhost:3050/C:/Users/AORUS/Documents/bases/", "base.FDB", "SYSDBA", "masterkey");
+                
+                // <editor-fold defaultstate="collapsed" desc="Carga de Tablas">
+                // Carga de Tablas
+                ResultSet res = basePrueba.query("""
+                                                    select rdb$relation_name
+                                                    from rdb$relations
+                                                    where rdb$view_blr is null
+                                                    and (rdb$system_flag is null or rdb$system_flag = 0);
+                                                """);
+                int cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // </editor-fold>
+                
+                // <editor-fold defaultstate="collapsed" desc="Carga de Vistas">
+                // Carga de Vistas
+                FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Views", dataBaseIndex, Position.Bias.Forward)));
+                res = basePrueba.query("""
+                                        select rdb$relation_name
+                                        from rdb$relations
+                                        where rdb$view_blr is not null
+                                        and (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // </editor-fold>
+                
+                // <editor-fold defaultstate="collapsed" desc="Carga de Paquetes">
+                // Carga de Paquetes
+                FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Packages", dataBaseIndex, Position.Bias.Forward)));
+                res = basePrueba.query("""
+                                        select RDB$PACKAGE_NAME
+                                        from RDB$PACKAGES
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // </editor-fold>
+                
+                // <editor-fold defaultstate="collapsed" desc="Carga de Procedimientos Almacenados">
+                // Carga de Procedimientos Almacenados
+                FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Saved Processes", dataBaseIndex, Position.Bias.Forward)));
+                res = basePrueba.query("""
+                                        select RDB$PROCEDURE_NAME
+                                        from RDB$PROCEDURES
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // </editor-fold>
+                
+                // <editor-fold defaultstate="collapsed" desc="Carga de Funciones">
+                // Carga de Funciones
+                FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Functions", dataBaseIndex, Position.Bias.Forward)));
+                res = basePrueba.query("""
+                                        select RDB$FUNCTION_NAME
+                                        from RDB$FUNCTIONS
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // </editor-fold>
+                
+                // <editor-fold defaultstate="collapsed" desc="Carga de Generadores">
+                // Carga de Generadores
+                FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Secuences", dataBaseIndex, Position.Bias.Forward)));
+                res = basePrueba.query("""
+                                        select RDB$GENERATOR_NAME
+                                        from RDB$GENERATORS
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // </editor-fold>
+                
+                // <editor-fold defaultstate="collapsed" desc="Carga de Triggers">
+                // Carga de Triggers
+                FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Triggers", dataBaseIndex, Position.Bias.Forward)));
+                res = basePrueba.query("""
+                                        select RDB$TRIGGER_NAME
+                                        from RDB$TRIGGERS
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // </editor-fold>
+                
+                // <editor-fold defaultstate="collapsed" desc="Carga de Indices">
+                // Carga de Indices
+                FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Indexes", dataBaseIndex, Position.Bias.Forward)));
+                res = basePrueba.query("""
+                                        select RDB$INDEX_NAME
+                                        from RDB$INDICES
+                                        where (rdb$system_flag is null or rdb$system_flag = 0);
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // </editor-fold>
+                
+                // <editor-fold defaultstate="collapsed" desc="Carga de Usuarios">
+                // Carga de Usuarios
+                FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Users", dataBaseIndex, Position.Bias.Forward)));
+                res = basePrueba.query("""
+                                        select SEC$USER_NAME
+                                        from SEC$USERS;
+                                    """);
+                cnt = 0;
+                while (res.next()) {
+                    cnt++;
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                    selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    modelo.insertNodeInto(n, selectedNode, 0);
+                }
+                // </editor-fold>
+                
+            } else {
+                FileTree.setSelectionRow(indice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,6 +234,7 @@ public class Window extends javax.swing.JFrame {
         LoginButton = new javax.swing.JButton();
         UsernameField = new javax.swing.JTextField();
         PasswordField = new javax.swing.JPasswordField();
+<<<<<<< Updated upstream
         NewUserButton = new javax.swing.JButton();
         Sessions = new javax.swing.JTabbedPane();
         AppScreen = new javax.swing.JPanel();
@@ -63,6 +248,14 @@ public class Window extends javax.swing.JFrame {
         MenuBar = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+=======
+        AppScreen = new javax.swing.JPanel();
+        AppNameLabel = new javax.swing.JLabel();
+        SplitPane = new javax.swing.JSplitPane();
+        LeftPane = new javax.swing.JScrollPane();
+        FileTree = new javax.swing.JTree();
+        RightPane = new javax.swing.JPanel();
+>>>>>>> Stashed changes
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
@@ -113,6 +306,19 @@ public class Window extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 PasswordFieldFocusLost(evt);
+            }
+        });
+        PasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PasswordFieldActionPerformed(evt);
+            }
+        });
+        PasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PasswordFieldKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PasswordFieldKeyTyped(evt);
             }
         });
 
@@ -174,6 +380,7 @@ public class Window extends javax.swing.JFrame {
         AppScreen.setMaximumSize(new java.awt.Dimension(1280, 720));
         AppScreen.setPreferredSize(new java.awt.Dimension(1280, 720));
 
+<<<<<<< Updated upstream
         SplitPane.setDividerLocation(150);
 
         javax.swing.GroupLayout RightPaneLayout = new javax.swing.GroupLayout(RightPane);
@@ -190,6 +397,12 @@ public class Window extends javax.swing.JFrame {
         SplitPane.setRightComponent(RightPane);
 
         LeftPane.setLayout(null);
+=======
+        AppNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        AppNameLabel.setText("Database Management Tool");
+
+        SplitPane.setDividerLocation(150);
+>>>>>>> Stashed changes
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Bases");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("BasePrueba");
@@ -218,6 +431,7 @@ public class Window extends javax.swing.JFrame {
                 FileTreeMouseClicked(evt);
             }
         });
+<<<<<<< Updated upstream
         JTreePane.setViewportView(FileTree);
 
         LeftPane.add(JTreePane);
@@ -259,17 +473,44 @@ public class Window extends javax.swing.JFrame {
         jScrollPane1.setBounds(0, 400, 150, 320);
 
         SplitPane.setLeftComponent(LeftPane);
+=======
+        LeftPane.setViewportView(FileTree);
+
+        SplitPane.setLeftComponent(LeftPane);
+
+        javax.swing.GroupLayout RightPaneLayout = new javax.swing.GroupLayout(RightPane);
+        RightPane.setLayout(RightPaneLayout);
+        RightPaneLayout.setHorizontalGroup(
+            RightPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1109, Short.MAX_VALUE)
+        );
+        RightPaneLayout.setVerticalGroup(
+            RightPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 676, Short.MAX_VALUE)
+        );
+
+        SplitPane.setRightComponent(RightPane);
+>>>>>>> Stashed changes
 
         javax.swing.GroupLayout AppScreenLayout = new javax.swing.GroupLayout(AppScreen);
         AppScreen.setLayout(AppScreenLayout);
         AppScreenLayout.setHorizontalGroup(
             AppScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< Updated upstream
             .addComponent(SplitPane)
+=======
+            .addGroup(AppScreenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(AppNameLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1264, Short.MAX_VALUE)
+>>>>>>> Stashed changes
         );
         AppScreenLayout.setVerticalGroup(
             AppScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AppScreenLayout.createSequentialGroup()
                 .addContainerGap()
+<<<<<<< Updated upstream
                 .addComponent(SplitPane))
         );
 
@@ -285,6 +526,15 @@ public class Window extends javax.swing.JFrame {
         MenuBar.add(jMenu3);
 
         setJMenuBar(MenuBar);
+=======
+                .addComponent(AppNameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SplitPane))
+        );
+
+        LayeredPane.add(AppScreen);
+        AppScreen.setBounds(0, 0, 1280, 720);
+>>>>>>> Stashed changes
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -301,15 +551,11 @@ public class Window extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void UsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameFieldActionPerformed
-        // TODO add your handling code here:
+        log();
     }//GEN-LAST:event_UsernameFieldActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        System.out.println(UsernameField.getText());
-        System.out.println(PasswordField.getPassword());
-        if (UsernameField.getText().equals("admin") && PasswordField.getText().equals("admin")) {
-            LoginPanel.setVisible(false);
-        }
+        log();
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void UsernameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UsernameFieldFocusGained
@@ -345,6 +591,7 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_WelcomeLabelMouseClicked
 
     private void FileTreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FileTreeMouseClicked
+<<<<<<< Updated upstream
         try {
             /*cont++;
             if (cont == 2) {
@@ -509,6 +756,22 @@ public class Window extends javax.swing.JFrame {
       
 
     }//GEN-LAST:event_NewUserButtonActionPerformed
+=======
+        loadDataBase("BasePrueba");
+    }//GEN-LAST:event_FileTreeMouseClicked
+
+    private void PasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PasswordFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PasswordFieldKeyPressed
+
+    private void PasswordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PasswordFieldKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PasswordFieldKeyTyped
+
+    private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
+        log();
+    }//GEN-LAST:event_PasswordFieldActionPerformed
+>>>>>>> Stashed changes
 
     /**
      * @param args the command line arguments
