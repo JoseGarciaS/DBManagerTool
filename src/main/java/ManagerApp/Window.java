@@ -41,7 +41,7 @@ public class Window extends javax.swing.JFrame {
     private void log() {
         System.out.println(UsernameField.getText());
         System.out.println(PasswordField.getPassword());
-        if (UsernameField.getText().equals("admin") && PasswordField.getText().equals("admin")) {
+        if (UsernameField.getText().equals("sysdba") && PasswordField.getText().equals("sysdba")) {
             LoginPanel.setVisible(false);
         }
     }
@@ -80,9 +80,21 @@ public class Window extends javax.swing.JFrame {
                 int cnt = 0;
                 while (res.next()) {
                     cnt++;
+                    ResultSet res1 = basePrueba.query("""
+                                                    select rdb$field_name
+                                                    from rdb$relation_fields
+                                                    where rdb$relation_name like '
+                                                """ + res.getNString(1) + "%';");
                     DefaultMutableTreeNode n = new DefaultMutableTreeNode(res.getNString(1));
+                FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Tables", dataBaseIndex, Position.Bias.Forward)));
                     selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+                    System.out.println(selectedNode.toString());
+                    while (res1.next()) {
+                        DefaultMutableTreeNode temporal = new DefaultMutableTreeNode(res1.getNString(1));
+                        n.insert(temporal, n.getChildCount());
+                    }
                     modelo.insertNodeInto(n, selectedNode, 0);
+                    FileTree.setModel(modelo);
                 }
                 // </editor-fold>
 
