@@ -23,14 +23,14 @@ public class DataBase {
 
     public DataBase(String path, String name, String user, String password) {
         props = new Properties();
-        
+
         this.path = path;
         this.alias = name;
 
         props.setProperty("user", user);
         props.setProperty("password", password);
         props.setProperty("encoding", "UTF8");
-        
+
         // <editor-fold defaultstate="collapsed" desc="Trash Code">
         /* 
         try {
@@ -55,43 +55,50 @@ public class DataBase {
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.toString());
         } 
-        */
+         */
         // </editor-fold>
     }
-    
-    public Connection getConnection() {
-        try {
-            Class.forName("org.firebirdsql.jdbc.FBDriver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:firebirdsql://"+path,
-                    props);
-            return connection;
-        } catch (SQLException | ClassNotFoundException ex) {
-            System.out.println(ex.toString());
-            return null;
-        }
+
+    public Connection getConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("org.firebirdsql.jdbc.FBDriver");
+        Connection connection = DriverManager.getConnection(
+                "jdbc:firebirdsql://" + path,
+                props);
+        return connection;
     }
-    
+
     public ResultSet query(String consulta) {
-        Connection con = getConnection();
-        Statement declara;
         try {
+            Connection con = getConnection();
+            Statement declara;
             declara = con.createStatement();
             ResultSet respuesta = declara.executeQuery(consulta);
             return respuesta;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error: "+e.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
             return null;
         }
     }
-    
+
     public void execute(String query) {
         try {
             Connection con = getConnection();
             Statement declara = con.createStatement();
             declara.execute(query);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error: "+ex.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public Properties getProps() {
+        return props;
     }
 }
