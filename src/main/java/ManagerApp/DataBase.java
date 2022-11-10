@@ -67,26 +67,26 @@ public class DataBase {
         return connection;
     }
 
-    public ResultSet query(String consulta) {
+    public ResultSet query(String consulta) throws SQLException {
         try {
             Connection con = getConnection();
             Statement declara;
             declara = con.createStatement();
             ResultSet respuesta = declara.executeQuery(consulta);
             return respuesta;
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
             return null;
         }
     }
 
-    public void execute(String query) {
+    public void execute(String query) throws SQLException {
         try {
             Connection con = getConnection();
             Statement declara = con.createStatement();
             declara.execute(query);
-        } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
