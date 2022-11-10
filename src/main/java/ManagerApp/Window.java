@@ -25,6 +25,7 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,7 +43,7 @@ public class Window extends javax.swing.JFrame {
     DataBase basePrueba;
     ArrayList<DataBase> dbs = new ArrayList<>();
     ArrayList<User> users = new ArrayList<>();
-
+    
     public Window() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -50,7 +51,7 @@ public class Window extends javax.swing.JFrame {
         refreshMenu.setEnabled(false);
         logoutMenu.setEnabled(false);
         queryPanel.setToolTipText(null);
-
+        
         try ( RandomAccessFile file = new RandomAccessFile("info.bin", "rw")) {
             long leido = 0;
             while (leido < file.length()) {
@@ -74,7 +75,7 @@ public class Window extends javax.swing.JFrame {
         } catch (IOException ex) {
             System.out.println(ex.toString());
         }
-
+        
         try ( RandomAccessFile file = new RandomAccessFile("data.bin", "rw")) {
             while (file.getFilePointer() < file.length()) {
                 file.seek(0);
@@ -94,7 +95,7 @@ public class Window extends javax.swing.JFrame {
             System.out.println(ex.toString());
         }
     }
-
+    
     private void log() {
         for (User user : users) {
             StringBuffer sb = new StringBuffer((String) UsernameField.getSelectedItem());
@@ -115,7 +116,7 @@ public class Window extends javax.swing.JFrame {
             }
         }
     }
-
+    
     private void loadDataBase(String dataBaseAlias) {
         if (dbs.isEmpty()) {
             return;
@@ -142,19 +143,19 @@ public class Window extends javax.swing.JFrame {
             //System.out.println(selectedNode);
             if (modelo.getChildCount(selectedNode) == 0) {
                 String listas[] = {"Tables", "Views", "Packages", "Saved Processes", "Functions", "Secuences", "Triggers", "Indexes", "Users"};
-
+                
                 for (String nodo : listas) {
                     DefaultMutableTreeNode n = new DefaultMutableTreeNode(nodo);
                     modelo.insertNodeInto(n, selectedNode, selectedNode.getChildCount());
                 }
                 FileTree.setModel(modelo);
             }
-
+            
             FileTree.expandRow(dataBaseIndex);
             //System.out.println("PATH " + FileTree.getRowForPath(FileTree.getNextMatch("Tables", dataBaseIndex, Position.Bias.Forward)));
             FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Tables", dataBaseIndex, Position.Bias.Forward)));
             selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
-
+            
             if (modelo.getChildCount(selectedNode) == 0) {
                 //System.out.println(selectedNode);
                 basePrueba = dbs.get(arrayDBIndex);
@@ -324,6 +325,8 @@ public class Window extends javax.swing.JFrame {
     private void initComponents() {
 
         jFrame1 = new javax.swing.JFrame();
+        newTablePanel = new javax.swing.JScrollPane();
+        newTable = new javax.swing.JTable();
         LayeredPane = new javax.swing.JLayeredPane();
         Sessions = new javax.swing.JTabbedPane();
         AppScreen = new javax.swing.JPanel();
@@ -379,6 +382,24 @@ public class Window extends javax.swing.JFrame {
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
+
+        newTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        newTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                newTableKeyTyped(evt);
+            }
+        });
+        newTablePanel.setViewportView(newTable);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -835,7 +856,7 @@ public class Window extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-
+        
         log();
     }//GEN-LAST:event_LoginButtonActionPerformed
 
@@ -868,7 +889,7 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_NewUserButtonMouseClicked
 
     private void NewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewUserButtonActionPerformed
-
+        
         JTextField username = new JTextField();
         JTextField password = new JPasswordField();
         JTextField dataBaseAlias = new JTextField();
@@ -890,40 +911,40 @@ public class Window extends javax.swing.JFrame {
             "Password:", password,
             "Host name:", hostname,
             "Database Alias:", dataBaseAlias,};
-
+        
         JOptionPane.showMessageDialog(new JPanel(new GridLayout(0, 1)), message, "Create user", JOptionPane.PLAIN_MESSAGE);
         DataBase temporal = new DataBase(((JTextField) message[5]).getText(), ((JTextField) message[7]).getText(),
                 ((JTextField) message[1]).getText(), ((JTextField) message[3]).getText());
-
+        
         try {
             temporal.getConnection();
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
         for (int i = 0; i < modelo.getChildCount(modelo.getRoot()); i++) {
             if (modelo.getChild(modelo.getRoot(), i).toString().equals(temporal.getAlias())) {
                 JOptionPane.showMessageDialog(null, "Error: El alias ya esta en uso", "Error de registro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
-
+        
         char usuario[] = new char[20];
         char contra[] = new char[20];
-
+        
         User userTemp = new User(logged[0].toCharArray(), logged[1].toCharArray());
-
+        
         StringBuffer sb = new StringBuffer(((JTextField) message[1]).getText());
         sb.setLength(20);
         usuario = sb.toString().toCharArray();
         userTemp.setUser(usuario);
-
+        
         sb = new StringBuffer(((JTextField) message[3]).getText());
         sb.setLength(20);
         contra = sb.toString().toCharArray();
         userTemp.setPassword(contra);
-
+        
         boolean exists = false;
         for (User user : users) {
             if (user.confirmUser(usuario, contra)) {
@@ -931,7 +952,7 @@ public class Window extends javax.swing.JFrame {
                 break;
             }
         }
-
+        
         if (!exists) {
             try ( RandomAccessFile file = new RandomAccessFile("info.bin", "rw")) {
                 file.seek(file.length());
@@ -943,7 +964,7 @@ public class Window extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error al abrir archivo local", JOptionPane.ERROR_MESSAGE);
             }
         }
-
+        
         try ( RandomAccessFile file = new RandomAccessFile("data.bin", "rw")) {
             file.seek(file.length());
             file.writeUTF(temporal.getPath());
@@ -955,7 +976,7 @@ public class Window extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error al abrir archivo local", JOptionPane.ERROR_MESSAGE);
         }
-
+        
         users.add(new User(usuario, contra));
         FileTree.setSelectionRow(0);
         DefaultMutableTreeNode n = new DefaultMutableTreeNode(((JTextField) message[7]).getText());
@@ -964,7 +985,7 @@ public class Window extends javax.swing.JFrame {
         dbs.add(temporal);
 
     }//GEN-LAST:event_NewUserButtonActionPerformed
-
+    
 
     private void PasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PasswordFieldKeyPressed
         // TODO add your handling code here:
@@ -1007,8 +1028,9 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshMenuActionPerformed
 
     private void runQueryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runQueryButtonActionPerformed
-        if (queryPanel.getText().isBlank())
+        if (queryPanel.getText().isBlank()) {
             return;
+        }
         String selected = queryPanel.getSelectedText();
         String sb = selected;
         if (selected == null) {
@@ -1057,10 +1079,45 @@ public class Window extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_runQueryButtonActionPerformed
-
+    
     private void tableCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tableCreateActionPerformed
         int option = JOptionPane.showConfirmDialog(null, "Visual Creation?", "Table Create", JOptionPane.YES_NO_CANCEL_OPTION);
         if (option == 0) {
+            JTextField tableName = new JTextField();
+            JTextField pk = new JTextField();
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Field");
+            model.addColumn("Type");
+            model.setRowCount(1);
+            newTable.setModel(model);
+            
+            Object[] message = {
+                "Table Name:", tableName,
+                "Fields:", newTablePanel,
+                "Host name:", pk};
+            
+            JOptionPane.showMessageDialog(new JPanel(new GridLayout(0, 1)), message, "Create Table", JOptionPane.PLAIN_MESSAGE);
+            
+            String newTableName = tableName.getText();
+            String primaryKey = pk.getText();
+            Vector fields = new Vector();
+            Vector types = new Vector();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                fields.add(newTable.getValueAt(0, i));
+                types.add(newTable.getValueAt(1, i));
+            }
+            String creation = "CREATE TABLE " + newTableName + " (";
+            for (int i = 0; i < fields.size(); i++) {
+                creation = creation.concat((String)fields.elementAt(i) + " " + (String)types.elementAt(i) + ", ");
+            }
+            creation = creation.concat(" PRIMARY KEY("+primaryKey+"));");
+            
+            try {
+                basePrueba.execute(creation);
+            } catch (SQLException ex) {
+                Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         } else if (option == 1) {
             String creation = """
                           CREATE TABLE table_name
@@ -1076,7 +1133,7 @@ public class Window extends javax.swing.JFrame {
                               ...
                           );
                           """;
-
+            
             queryPanel.setText(queryPanel.getText() + "\n" + creation);
         }
     }//GEN-LAST:event_tableCreateActionPerformed
@@ -1084,7 +1141,18 @@ public class Window extends javax.swing.JFrame {
     private void viewCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCreateActionPerformed
         int option = JOptionPane.showConfirmDialog(null, "Visual Creation?", "View Create", JOptionPane.YES_NO_CANCEL_OPTION);
         if (option == 0) {
-
+            JTextField username = new JTextField();
+            JTextField password = new JPasswordField();
+            JTextField dataBaseAlias = new JTextField();
+            JTextField hostname = new JTextField();
+            
+            Object[] message = {
+                "Username:", username,
+                "Password:", password,
+                "Host name:", hostname,
+                "Database Alias:", dataBaseAlias,};
+            
+            JOptionPane.showMessageDialog(new JPanel(new GridLayout(0, 1)), message, "Create database", JOptionPane.PLAIN_MESSAGE);
         } else if (option == 1) {
             String creation = """
                           CREATE VIEW view_name ( view_column, ...)
@@ -1092,7 +1160,7 @@ public class Window extends javax.swing.JFrame {
                           /* write select statement here */
                           WITH CHECK OPTION;
                           """;
-
+            
             queryPanel.setText(queryPanel.getText() + "\n" + creation);
         }
     }//GEN-LAST:event_viewCreateActionPerformed
@@ -1108,7 +1176,7 @@ public class Window extends javax.swing.JFrame {
             JComboBox admin = new JComboBox();
             admin.addItem("NO");
             admin.addItem("YES");
-
+            
             Object[] message = {
                 "Username:", username,
                 "Password:", password,
@@ -1116,9 +1184,9 @@ public class Window extends javax.swing.JFrame {
                 "Middle Name:", middleName,
                 "Last Name:", lastName,
                 "Admin Role:", admin};
-
+            
             JOptionPane.showMessageDialog(new JPanel(new GridLayout(0, 1)), message, "Create user", JOptionPane.PLAIN_MESSAGE);
-
+            
             String creation = "CREATE USER " + username.getText().toUpperCase() + " PASSWORD '" + password.getText() + "' ";
             if (!firstName.getText().isBlank()) {
                 creation = creation.concat(" FIRSTNAME '" + firstName.getText() + "' ");
@@ -1132,8 +1200,8 @@ public class Window extends javax.swing.JFrame {
             if (admin.getSelectedIndex() == 1) {
                 creation = creation.concat(" GRANT ADMIN ROLE");
             }
-            creation = creation.concat("; COMMIT;");
-
+            creation = creation.concat(";");
+            
             try {
                 basePrueba.executeUpdate(creation);
                 outputArea.setText(outputArea.getText() + "\nSuccess Executing SQL");
@@ -1150,7 +1218,7 @@ public class Window extends javax.swing.JFrame {
                              [LASTNAME 'lastname']
                              [GRANT ADMIN ROLE]
                           """;
-
+            
             queryPanel.setText(queryPanel.getText() + "\n" + creation);
         }
     }//GEN-LAST:event_userCreateActionPerformed
@@ -1160,57 +1228,47 @@ public class Window extends javax.swing.JFrame {
         JTextField password = new JPasswordField();
         JTextField dataBaseAlias = new JTextField();
         JTextField hostname = new JTextField();
-
-        /* JTextField username = new JTextField("");
-        JTextField password = new JTextField("");
-        jtextfield
-        JPanel panel = new JPanel(new GridLayout(0,1));
-  
-        panel.add(new JLabel("Field 1:"));
-        panel.add(field1);
-        panel.add(new JLabel("Field 2:"));
-        panel.add(field2);
-        int result = JOptionPane.showConfirmDialog(null, panel, "Test",
-            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);*/
+        
         Object[] message = {
             "Username:", username,
             "Password:", password,
             "Host name:", hostname,
             "Database Alias:", dataBaseAlias,};
-
-        JOptionPane.showMessageDialog(new JPanel(new GridLayout(0, 1)), message, "Create user", JOptionPane.PLAIN_MESSAGE);
+        
+        JOptionPane.showMessageDialog(new JPanel(new GridLayout(0, 1)), message, "Create database", JOptionPane.PLAIN_MESSAGE);
         DataBase temporal = new DataBase(((JTextField) message[5]).getText(), ((JTextField) message[7]).getText(),
                 ((JTextField) message[1]).getText(), ((JTextField) message[3]).getText());
-
+        
         try {
-            temporal.getConnection();
-        } catch (ClassNotFoundException | SQLException e) {
+            temporal.create();
+        } catch (SQLException e) {
+            System.out.println(e);
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
         for (int i = 0; i < modelo.getChildCount(modelo.getRoot()); i++) {
             if (modelo.getChild(modelo.getRoot(), i).toString().equals(temporal.getAlias())) {
                 JOptionPane.showMessageDialog(null, "Error: El alias ya esta en uso", "Error de registro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
-
+        
         char usuario[] = new char[20];
         char contra[] = new char[20];
-
+        
         User userTemp = new User(logged[0].toCharArray(), logged[1].toCharArray());
-
+        
         StringBuffer sb = new StringBuffer(((JTextField) message[1]).getText());
         sb.setLength(20);
         usuario = sb.toString().toCharArray();
         userTemp.setUser(usuario);
-
+        
         sb = new StringBuffer(((JTextField) message[3]).getText());
         sb.setLength(20);
         contra = sb.toString().toCharArray();
         userTemp.setPassword(contra);
-
+        
         boolean exists = false;
         for (User user : users) {
             if (user.confirmUser(usuario, contra)) {
@@ -1218,7 +1276,7 @@ public class Window extends javax.swing.JFrame {
                 break;
             }
         }
-
+        
         if (!exists) {
             try ( RandomAccessFile file = new RandomAccessFile("info.bin", "rw")) {
                 file.seek(file.length());
@@ -1230,7 +1288,7 @@ public class Window extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error al abrir archivo local", JOptionPane.ERROR_MESSAGE);
             }
         }
-
+        
         try ( RandomAccessFile file = new RandomAccessFile("data.bin", "rw")) {
             file.seek(file.length());
             file.writeUTF(temporal.getPath());
@@ -1242,7 +1300,7 @@ public class Window extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error al abrir archivo local", JOptionPane.ERROR_MESSAGE);
         }
-
+        
         users.add(new User(usuario, contra));
         FileTree.setSelectionRow(0);
         DefaultMutableTreeNode n = new DefaultMutableTreeNode(((JTextField) message[7]).getText());
@@ -1250,6 +1308,18 @@ public class Window extends javax.swing.JFrame {
         modelo.insertNodeInto(n, selectedNode, modelo.getChildCount(modelo.getRoot()));
         dbs.add(temporal);
     }//GEN-LAST:event_dataCreateActionPerformed
+
+    private void newTableKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_newTableKeyTyped
+        DefaultTableModel model = (DefaultTableModel)newTable.getModel();
+        if (evt.getKeyChar() == '\n') {
+            model.setRowCount(model.getRowCount() + 1);
+        }
+        if (evt.getKeyChar() == 127) {
+            int selectedRow = newTable.getSelectedRow();
+            model.removeRow(selectedRow);
+            newTable.setRowSelectionInterval(selectedRow, selectedRow);
+        }
+    }//GEN-LAST:event_newTableKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1324,6 +1394,8 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JMenuItem logoutMenu;
+    private javax.swing.JTable newTable;
+    private javax.swing.JScrollPane newTablePanel;
     private javax.swing.JTextArea outputArea;
     private javax.swing.JTextArea queryPanel;
     private javax.swing.JMenuItem refreshMenu;

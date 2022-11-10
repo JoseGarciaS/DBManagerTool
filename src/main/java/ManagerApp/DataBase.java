@@ -58,6 +58,18 @@ public class DataBase {
          */
         // </editor-fold>
     }
+    
+    public void create() throws SQLException {
+        try {
+            Class.forName("org.firebirdsql.jdbc.FBDriver");
+            Connection connection = DriverManager.getConnection("jdbc:firebirdsql://localhost:3050/C:/Archivos de Prgrama/Firebird/Firebird_4_0/security4.fdb", "SYSDBA", "masterkey");
+            String dir = path.substring(15);
+            Statement declara = connection.createStatement();
+            declara.executeUpdate("CREATE DATABASE '"+dir+"';");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("org.firebirdsql.jdbc.FBDriver");
