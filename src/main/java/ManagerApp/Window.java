@@ -141,6 +141,9 @@ public class Window extends javax.swing.JFrame {
             FileTree.setSelectionRow(dataBaseIndex);
             selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
             //System.out.println(selectedNode);
+            for (int i = 0; i < selectedNode.getChildCount(); i++) {
+                selectedNode.remove(0);
+            }
             if (modelo.getChildCount(selectedNode) == 0) {
                 String listas[] = {"Tables", "Views", "Packages", "Saved Processes", "Functions", "Secuences", "Triggers", "Indexes", "Users"};
                 
@@ -156,7 +159,7 @@ public class Window extends javax.swing.JFrame {
             FileTree.setSelectionRow(FileTree.getRowForPath(FileTree.getNextMatch("Tables", dataBaseIndex, Position.Bias.Forward)));
             selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
             
-            if (modelo.getChildCount(selectedNode) == 0) {
+            if (true) {
                 //System.out.println(selectedNode);
                 basePrueba = dbs.get(arrayDBIndex);
                 //System.out.println(basePrueba.getAlias());
@@ -328,6 +331,15 @@ public class Window extends javax.swing.JFrame {
         newTablePanel = new javax.swing.JScrollPane();
         newTable = new javax.swing.JTable();
         LayeredPane = new javax.swing.JLayeredPane();
+        LoginPanel = new javax.swing.JPanel();
+        TitleLabel = new javax.swing.JLabel();
+        SubLabel = new javax.swing.JLabel();
+        LoginButton = new javax.swing.JButton();
+        PasswordField = new javax.swing.JPasswordField();
+        NewUserButton = new javax.swing.JButton();
+        UsernameField = new javax.swing.JComboBox<>();
+        UserLabel = new javax.swing.JLabel();
+        PasswordLabel = new javax.swing.JLabel();
         Sessions = new javax.swing.JTabbedPane();
         AppScreen = new javax.swing.JPanel();
         SplitPane = new javax.swing.JSplitPane();
@@ -351,15 +363,6 @@ public class Window extends javax.swing.JFrame {
         tableCreate = new javax.swing.JButton();
         viewCreate = new javax.swing.JButton();
         userCreate = new javax.swing.JButton();
-        LoginPanel = new javax.swing.JPanel();
-        TitleLabel = new javax.swing.JLabel();
-        SubLabel = new javax.swing.JLabel();
-        LoginButton = new javax.swing.JButton();
-        PasswordField = new javax.swing.JPasswordField();
-        NewUserButton = new javax.swing.JButton();
-        UsernameField = new javax.swing.JComboBox<>();
-        UserLabel = new javax.swing.JLabel();
-        PasswordLabel = new javax.swing.JLabel();
         AppScreen1 = new javax.swing.JPanel();
         AppNameLabel = new javax.swing.JLabel();
         SplitPane1 = new javax.swing.JSplitPane();
@@ -403,6 +406,118 @@ public class Window extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        LoginPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginPanelMouseClicked(evt);
+            }
+        });
+
+        TitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        TitleLabel.setText("Database Manager Tool");
+        TitleLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TitleLabelMouseClicked(evt);
+            }
+        });
+
+        SubLabel.setText("Login");
+
+        LoginButton.setText("Login");
+        LoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginButtonActionPerformed(evt);
+            }
+        });
+
+        PasswordField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                PasswordFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                PasswordFieldFocusLost(evt);
+            }
+        });
+        PasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PasswordFieldActionPerformed(evt);
+            }
+        });
+        PasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PasswordFieldKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PasswordFieldKeyTyped(evt);
+            }
+        });
+
+        NewUserButton.setText("Create a new user");
+        NewUserButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                NewUserButtonMouseClicked(evt);
+            }
+        });
+        NewUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewUserButtonActionPerformed(evt);
+            }
+        });
+
+        UsernameField.setEditable(true);
+
+        UserLabel.setText("Username");
+
+        PasswordLabel.setText("Password");
+
+        javax.swing.GroupLayout LoginPanelLayout = new javax.swing.GroupLayout(LoginPanel);
+        LoginPanel.setLayout(LoginPanelLayout);
+        LoginPanelLayout.setHorizontalGroup(
+            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LoginPanelLayout.createSequentialGroup()
+                .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LoginPanelLayout.createSequentialGroup()
+                        .addGap(478, 478, 478)
+                        .addComponent(TitleLabel))
+                    .addGroup(LoginPanelLayout.createSequentialGroup()
+                        .addGap(584, 584, 584)
+                        .addComponent(SubLabel))
+                    .addGroup(LoginPanelLayout.createSequentialGroup()
+                        .addGap(456, 456, 456)
+                        .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(LoginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(UsernameField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(UserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PasswordField)
+                            .addComponent(PasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(NewUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))))
+                .addContainerGap(533, Short.MAX_VALUE))
+        );
+        LoginPanelLayout.setVerticalGroup(
+            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LoginPanelLayout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(TitleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SubLabel)
+                .addGap(85, 85, 85)
+                .addComponent(UserLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(PasswordLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(LoginButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(NewUserButton)
+                .addContainerGap(296, Short.MAX_VALUE))
+        );
+
+        LayeredPane.setLayer(LoginPanel, javax.swing.JLayeredPane.DRAG_LAYER);
+        LayeredPane.add(LoginPanel);
+        LoginPanel.setBounds(0, 0, 1280, 720);
 
         AppScreen.setMaximumSize(new java.awt.Dimension(1280, 720));
         AppScreen.setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -624,121 +739,9 @@ public class Window extends javax.swing.JFrame {
 
         Sessions.addTab("Session", AppScreen);
 
-        LayeredPane.setLayer(Sessions, javax.swing.JLayeredPane.DRAG_LAYER);
+        LayeredPane.setLayer(Sessions, javax.swing.JLayeredPane.MODAL_LAYER);
         LayeredPane.add(Sessions);
         Sessions.setBounds(0, 0, 1280, 720);
-
-        LoginPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LoginPanelMouseClicked(evt);
-            }
-        });
-
-        TitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        TitleLabel.setText("Database Manager Tool");
-        TitleLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TitleLabelMouseClicked(evt);
-            }
-        });
-
-        SubLabel.setText("Login");
-
-        LoginButton.setText("Login");
-        LoginButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginButtonActionPerformed(evt);
-            }
-        });
-
-        PasswordField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                PasswordFieldFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                PasswordFieldFocusLost(evt);
-            }
-        });
-        PasswordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PasswordFieldActionPerformed(evt);
-            }
-        });
-        PasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                PasswordFieldKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                PasswordFieldKeyTyped(evt);
-            }
-        });
-
-        NewUserButton.setText("Create a new user");
-        NewUserButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                NewUserButtonMouseClicked(evt);
-            }
-        });
-        NewUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NewUserButtonActionPerformed(evt);
-            }
-        });
-
-        UsernameField.setEditable(true);
-
-        UserLabel.setText("Username");
-
-        PasswordLabel.setText("Password");
-
-        javax.swing.GroupLayout LoginPanelLayout = new javax.swing.GroupLayout(LoginPanel);
-        LoginPanel.setLayout(LoginPanelLayout);
-        LoginPanelLayout.setHorizontalGroup(
-            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LoginPanelLayout.createSequentialGroup()
-                .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(LoginPanelLayout.createSequentialGroup()
-                        .addGap(478, 478, 478)
-                        .addComponent(TitleLabel))
-                    .addGroup(LoginPanelLayout.createSequentialGroup()
-                        .addGap(584, 584, 584)
-                        .addComponent(SubLabel))
-                    .addGroup(LoginPanelLayout.createSequentialGroup()
-                        .addGap(456, 456, 456)
-                        .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(LoginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(UsernameField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(UserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PasswordField)
-                            .addComponent(PasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NewUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))))
-                .addContainerGap(533, Short.MAX_VALUE))
-        );
-        LoginPanelLayout.setVerticalGroup(
-            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LoginPanelLayout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(TitleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SubLabel)
-                .addGap(85, 85, 85)
-                .addComponent(UserLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(UsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(PasswordLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(LoginButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(NewUserButton)
-                .addContainerGap(296, Short.MAX_VALUE))
-        );
-
-        LayeredPane.setLayer(LoginPanel, javax.swing.JLayeredPane.DRAG_LAYER);
-        LayeredPane.add(LoginPanel);
-        LoginPanel.setBounds(0, 0, 1280, 720);
 
         AppScreen1.setMaximumSize(new java.awt.Dimension(1280, 720));
         AppScreen1.setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -1036,11 +1039,12 @@ public class Window extends javax.swing.JFrame {
         if (selected == null) {
             sb = queryPanel.getText();
         }
-        String querys[] = sb.split("\n");
+        String querys[] = sb.split(";");
+        System.out.println(Arrays.toString(querys));
         for (String query : querys) {
             if (query.toUpperCase().startsWith("SELECT")) {
                 try {
-                    ResultSet res = basePrueba.query(queryPanel.getText());
+                    ResultSet res = basePrueba.query(query);
                     outputArea.setText(outputArea.getText() + "\n" + "Success Executing SQL");
                     DefaultTableModel modelo = (DefaultTableModel) resultTable.getModel();
                     for (int i = 0; i < res.getMetaData().getColumnCount(); i++) {
@@ -1069,7 +1073,7 @@ public class Window extends javax.swing.JFrame {
                 }
             } else {
                 try {
-                    basePrueba.execute(queryPanel.getText());
+                    basePrueba.execute(query);
                     OutPane.setSelectedIndex(0);
                     outputArea.setText(outputArea.getText() + "\n" + "Success Executing SQL");
                 } catch (SQLException ex) {
@@ -1106,6 +1110,8 @@ public class Window extends javax.swing.JFrame {
                 fields.add(newTable.getValueAt(0, i));
                 types.add(newTable.getValueAt(1, i));
             }
+            System.out.println(fields);
+            System.out.println(types);
             String creation = "CREATE TABLE " + newTableName + " (";
             for (int i = 0; i < fields.size(); i++) {
                 creation = creation.concat((String)fields.elementAt(i) + " " + (String)types.elementAt(i) + ", ");
