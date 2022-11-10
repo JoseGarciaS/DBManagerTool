@@ -135,6 +135,14 @@
                                   <Component id="RefreshButton" min="-2" pref="149" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="runQueryButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="dataCreate" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="tableCreate" min="-2" pref="108" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="viewCreate" min="-2" pref="108" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="userCreate" min="-2" pref="108" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -148,6 +156,10 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="RefreshButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="runQueryButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="dataCreate" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="tableCreate" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewCreate" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="userCreate" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="SplitPane" pref="663" max="32767" attributes="0"/>
@@ -397,6 +409,38 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="runQueryButtonActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="dataCreate">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Create Database"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dataCreateActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="tableCreate">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Create Table"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tableCreateActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="viewCreate">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Create View"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewCreateActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="userCreate">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Create User"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userCreateActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

@@ -90,6 +90,16 @@ public class DataBase {
         }
     }
 
+    public void executeUpdate(String query) throws SQLException {
+        try {
+            Connection con = getConnection();
+            Statement declara = con.createStatement();
+            declara.executeUpdate(query);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public String getPath() {
         return path;
     }

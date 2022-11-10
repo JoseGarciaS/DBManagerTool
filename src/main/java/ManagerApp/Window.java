@@ -49,6 +49,7 @@ public class Window extends javax.swing.JFrame {
         modelo = (DefaultTreeModel) FileTree.getModel();
         refreshMenu.setEnabled(false);
         logoutMenu.setEnabled(false);
+        queryPanel.setToolTipText(null);
 
         try ( RandomAccessFile file = new RandomAccessFile("info.bin", "rw")) {
             long leido = 0;
@@ -343,6 +344,10 @@ public class Window extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         RefreshButton = new javax.swing.JButton();
         runQueryButton = new javax.swing.JButton();
+        dataCreate = new javax.swing.JButton();
+        tableCreate = new javax.swing.JButton();
+        viewCreate = new javax.swing.JButton();
+        userCreate = new javax.swing.JButton();
         LoginPanel = new javax.swing.JPanel();
         TitleLabel = new javax.swing.JLabel();
         SubLabel = new javax.swing.JLabel();
@@ -532,6 +537,34 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
+        dataCreate.setText("Create Database");
+        dataCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataCreateActionPerformed(evt);
+            }
+        });
+
+        tableCreate.setText("Create Table");
+        tableCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tableCreateActionPerformed(evt);
+            }
+        });
+
+        viewCreate.setText("Create View");
+        viewCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewCreateActionPerformed(evt);
+            }
+        });
+
+        userCreate.setText("Create User");
+        userCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userCreateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout AppScreenLayout = new javax.swing.GroupLayout(AppScreen);
         AppScreen.setLayout(AppScreenLayout);
         AppScreenLayout.setHorizontalGroup(
@@ -543,6 +576,14 @@ public class Window extends javax.swing.JFrame {
                         .addComponent(RefreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(runQueryButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(dataCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tableCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(viewCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(userCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -551,7 +592,11 @@ public class Window extends javax.swing.JFrame {
             .addGroup(AppScreenLayout.createSequentialGroup()
                 .addGroup(AppScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RefreshButton)
-                    .addComponent(runQueryButton))
+                    .addComponent(runQueryButton)
+                    .addComponent(dataCreate)
+                    .addComponent(tableCreate)
+                    .addComponent(viewCreate)
+                    .addComponent(userCreate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
         );
@@ -962,13 +1007,19 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshMenuActionPerformed
 
     private void runQueryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runQueryButtonActionPerformed
-        String sb = new String(queryPanel.getText());
+        if (queryPanel.getText().isBlank())
+            return;
+        String selected = queryPanel.getSelectedText();
+        String sb = selected;
+        if (selected == null) {
+            sb = queryPanel.getText();
+        }
         String querys[] = sb.split("\n");
         for (String query : querys) {
             if (query.toUpperCase().startsWith("SELECT")) {
                 try {
                     ResultSet res = basePrueba.query(queryPanel.getText());
-                    outputArea.setText(outputArea.getText() + "\n" + "SQL ejecutado con exito");
+                    outputArea.setText(outputArea.getText() + "\n" + "Success Executing SQL");
                     DefaultTableModel modelo = (DefaultTableModel) resultTable.getModel();
                     for (int i = 0; i < res.getMetaData().getColumnCount(); i++) {
                         modelo.addColumn(res.getMetaData().getColumnName(i + 1));
@@ -990,12 +1041,15 @@ public class Window extends javax.swing.JFrame {
                 for (DataBase db : dbs) {
                     if (db.getAlias().equalsIgnoreCase(baseName)) {
                         basePrueba = db;
+                        OutPane.setSelectedIndex(0);
+                        outputArea.setText(outputArea.getText() + "\n" + "Using database " + baseName);
                     }
                 }
             } else {
                 try {
                     basePrueba.execute(queryPanel.getText());
-                    outputArea.setText(outputArea.getText() + "\n" + "SQL ejecutado con exito");
+                    OutPane.setSelectedIndex(0);
+                    outputArea.setText(outputArea.getText() + "\n" + "Success Executing SQL");
                 } catch (SQLException ex) {
                     OutPane.setSelectedIndex(0);
                     outputArea.setText(outputArea.getText() + "\n" + ex.toString());
@@ -1003,6 +1057,199 @@ public class Window extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_runQueryButtonActionPerformed
+
+    private void tableCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tableCreateActionPerformed
+        int option = JOptionPane.showConfirmDialog(null, "Visual Creation?", "Table Create", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (option == 0) {
+        } else if (option == 1) {
+            String creation = """
+                          CREATE TABLE table_name
+                          (
+                              column_name {< datatype> | COMPUTED BY (< expr>) | domain}
+                                  [DEFAULT { literal | NULL | USER}] [NOT NULL]
+                              ...
+                              CONSTRAINT constraint_name
+                                  PRIMARY KEY (column_list),
+                                  UNIQUE      (column_list),
+                                  FOREIGN KEY (column_list) REFERENCES other_table (column_list),
+                                  CHECK       (condition),
+                              ...
+                          );
+                          """;
+
+            queryPanel.setText(queryPanel.getText() + "\n" + creation);
+        }
+    }//GEN-LAST:event_tableCreateActionPerformed
+
+    private void viewCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCreateActionPerformed
+        int option = JOptionPane.showConfirmDialog(null, "Visual Creation?", "View Create", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (option == 0) {
+
+        } else if (option == 1) {
+            String creation = """
+                          CREATE VIEW view_name ( view_column, ...)
+                          AS
+                          /* write select statement here */
+                          WITH CHECK OPTION;
+                          """;
+
+            queryPanel.setText(queryPanel.getText() + "\n" + creation);
+        }
+    }//GEN-LAST:event_viewCreateActionPerformed
+
+    private void userCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userCreateActionPerformed
+        int option = JOptionPane.showConfirmDialog(null, "Visual Creation?", "Table Create", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (option == 0) {
+            JTextField username = new JTextField();
+            JTextField password = new JPasswordField();
+            JTextField firstName = new JTextField();
+            JTextField middleName = new JTextField();
+            JTextField lastName = new JTextField();
+            JComboBox admin = new JComboBox();
+            admin.addItem("NO");
+            admin.addItem("YES");
+
+            Object[] message = {
+                "Username:", username,
+                "Password:", password,
+                "First Name:", firstName,
+                "Middle Name:", middleName,
+                "Last Name:", lastName,
+                "Admin Role:", admin};
+
+            JOptionPane.showMessageDialog(new JPanel(new GridLayout(0, 1)), message, "Create user", JOptionPane.PLAIN_MESSAGE);
+
+            String creation = "CREATE USER " + username.getText().toUpperCase() + " PASSWORD '" + password.getText() + "' ";
+            if (!firstName.getText().isBlank()) {
+                creation = creation.concat(" FIRSTNAME '" + firstName.getText() + "' ");
+            }
+            if (!middleName.getText().isBlank()) {
+                creation = creation.concat(" MIDDLENAME '" + middleName.getText() + "' ");
+            }
+            if (!lastName.getText().isBlank()) {
+                creation = creation.concat(" LASTNAME '" + lastName.getText() + "' ");
+            }
+            if (admin.getSelectedIndex() == 1) {
+                creation = creation.concat(" GRANT ADMIN ROLE");
+            }
+            creation = creation.concat("; COMMIT;");
+
+            try {
+                basePrueba.executeUpdate(creation);
+                outputArea.setText(outputArea.getText() + "\nSuccess Executing SQL");
+            } catch (SQLException ex) {
+                OutPane.setSelectedIndex(0);
+                outputArea.setText(outputArea.getText() + "\n" + ex.toString());
+                System.out.println(ex);
+            }
+        } else if (option == 1) {
+            String creation = """
+                          CREATE USER username PASSWORD 'password'
+                             [FIRSTNAME 'firstname']
+                             [MIDDLENAME 'middlename']
+                             [LASTNAME 'lastname']
+                             [GRANT ADMIN ROLE]
+                          """;
+
+            queryPanel.setText(queryPanel.getText() + "\n" + creation);
+        }
+    }//GEN-LAST:event_userCreateActionPerformed
+
+    private void dataCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataCreateActionPerformed
+        JTextField username = new JTextField();
+        JTextField password = new JPasswordField();
+        JTextField dataBaseAlias = new JTextField();
+        JTextField hostname = new JTextField();
+
+        /* JTextField username = new JTextField("");
+        JTextField password = new JTextField("");
+        jtextfield
+        JPanel panel = new JPanel(new GridLayout(0,1));
+  
+        panel.add(new JLabel("Field 1:"));
+        panel.add(field1);
+        panel.add(new JLabel("Field 2:"));
+        panel.add(field2);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Test",
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);*/
+        Object[] message = {
+            "Username:", username,
+            "Password:", password,
+            "Host name:", hostname,
+            "Database Alias:", dataBaseAlias,};
+
+        JOptionPane.showMessageDialog(new JPanel(new GridLayout(0, 1)), message, "Create user", JOptionPane.PLAIN_MESSAGE);
+        DataBase temporal = new DataBase(((JTextField) message[5]).getText(), ((JTextField) message[7]).getText(),
+                ((JTextField) message[1]).getText(), ((JTextField) message[3]).getText());
+
+        try {
+            temporal.getConnection();
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        for (int i = 0; i < modelo.getChildCount(modelo.getRoot()); i++) {
+            if (modelo.getChild(modelo.getRoot(), i).toString().equals(temporal.getAlias())) {
+                JOptionPane.showMessageDialog(null, "Error: El alias ya esta en uso", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        char usuario[] = new char[20];
+        char contra[] = new char[20];
+
+        User userTemp = new User(logged[0].toCharArray(), logged[1].toCharArray());
+
+        StringBuffer sb = new StringBuffer(((JTextField) message[1]).getText());
+        sb.setLength(20);
+        usuario = sb.toString().toCharArray();
+        userTemp.setUser(usuario);
+
+        sb = new StringBuffer(((JTextField) message[3]).getText());
+        sb.setLength(20);
+        contra = sb.toString().toCharArray();
+        userTemp.setPassword(contra);
+
+        boolean exists = false;
+        for (User user : users) {
+            if (user.confirmUser(usuario, contra)) {
+                exists = user.confirmUser(usuario, contra);
+                break;
+            }
+        }
+
+        if (!exists) {
+            try ( RandomAccessFile file = new RandomAccessFile("info.bin", "rw")) {
+                file.seek(file.length());
+                file.writeChars(Arrays.toString(usuario).replaceAll("[, | \\u005B | \\u005D]", ""));
+                file.writeChars(Arrays.toString(contra).replaceAll("[, | \\u005B | \\u005D]", ""));
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Archivo local no encontrado", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error al abrir archivo local", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        try ( RandomAccessFile file = new RandomAccessFile("data.bin", "rw")) {
+            file.seek(file.length());
+            file.writeUTF(temporal.getPath());
+            file.writeUTF(temporal.getAlias());
+            file.writeUTF(((JTextField) message[1]).getText());
+            file.writeUTF(((JTextField) message[3]).getText());
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Archivo local no encontrado", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error al abrir archivo local", JOptionPane.ERROR_MESSAGE);
+        }
+
+        users.add(new User(usuario, contra));
+        FileTree.setSelectionRow(0);
+        DefaultMutableTreeNode n = new DefaultMutableTreeNode(((JTextField) message[7]).getText());
+        selectedNode = (DefaultMutableTreeNode) FileTree.getLastSelectedPathComponent();
+        modelo.insertNodeInto(n, selectedNode, modelo.getChildCount(modelo.getRoot()));
+        dbs.add(temporal);
+    }//GEN-LAST:event_dataCreateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1067,6 +1314,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JLabel UserLabel;
     private javax.swing.JComboBox<String> UsernameField;
+    private javax.swing.JButton dataCreate;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -1081,5 +1329,8 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JMenuItem refreshMenu;
     private javax.swing.JTable resultTable;
     private javax.swing.JButton runQueryButton;
+    private javax.swing.JButton tableCreate;
+    private javax.swing.JButton userCreate;
+    private javax.swing.JButton viewCreate;
     // End of variables declaration//GEN-END:variables
 }
