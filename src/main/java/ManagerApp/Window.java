@@ -317,7 +317,6 @@ public class Window extends javax.swing.JFrame {
             Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -330,6 +329,11 @@ public class Window extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         newTablePanel = new javax.swing.JScrollPane();
         newTable = new javax.swing.JTable();
+        CreateTableScreen = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        TableInput = new javax.swing.JTable();
+        CancelTableButton = new javax.swing.JButton();
+        CreateTableButton = new javax.swing.JButton();
         LayeredPane = new javax.swing.JLayeredPane();
         LoginPanel = new javax.swing.JPanel();
         TitleLabel = new javax.swing.JLabel();
@@ -417,6 +421,65 @@ public class Window extends javax.swing.JFrame {
             }
         });
         newTablePanel.setViewportView(newTable);
+
+        CreateTableScreen.setPreferredSize(new java.awt.Dimension(160, 100));
+
+        TableInput.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Field", "Type"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(TableInput);
+        if (TableInput.getColumnModel().getColumnCount() > 0) {
+            TableInput.getColumnModel().getColumn(0).setResizable(false);
+            TableInput.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        CancelTableButton.setText("Cancel");
+
+        CreateTableButton.setText("Create");
+        CreateTableButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateTableButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout CreateTableScreenLayout = new javax.swing.GroupLayout(CreateTableScreen);
+        CreateTableScreen.setLayout(CreateTableScreenLayout);
+        CreateTableScreenLayout.setHorizontalGroup(
+            CreateTableScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CreateTableScreenLayout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(CreateTableScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(CreateTableScreenLayout.createSequentialGroup()
+                        .addComponent(CancelTableButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CreateTableButton))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
+        );
+        CreateTableScreenLayout.setVerticalGroup(
+            CreateTableScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CreateTableScreenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(CreateTableScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CreateTableButton)
+                    .addComponent(CancelTableButton))
+                .addGap(22, 22, 22))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -668,7 +731,7 @@ public class Window extends javax.swing.JFrame {
             .addGroup(LeftPaneLayout.createSequentialGroup()
                 .addComponent(JTreePane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
         );
 
         SplitPane.setLeftComponent(LeftPane);
@@ -748,7 +811,7 @@ public class Window extends javax.swing.JFrame {
                     .addComponent(viewCreate)
                     .addComponent(userCreate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE))
+                .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE))
         );
 
         Sessions.addTab("Session", AppScreen);
@@ -1550,6 +1613,10 @@ public class Window extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_DatabaseAliasFieldActionPerformed
 
+    private void CreateTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateTableButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreateTableButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1590,7 +1657,10 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JPanel AppScreen;
     private javax.swing.JPanel AppScreen1;
     private javax.swing.JButton CancelCreateButton;
+    private javax.swing.JButton CancelTableButton;
     private javax.swing.JPasswordField CreatePasswordField;
+    private javax.swing.JButton CreateTableButton;
+    private javax.swing.JPanel CreateTableScreen;
     private javax.swing.JButton CreateUserButton;
     private javax.swing.JTextField CreateUserField;
     private javax.swing.JPanel CreateUserScreen;
@@ -1622,6 +1692,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JSplitPane SplitPane1;
     private javax.swing.JLabel SubLabel;
     private javax.swing.JLabel SubLabel1;
+    private javax.swing.JTable TableInput;
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JLabel TitleLabel1;
     private javax.swing.JLabel UserLabel;
@@ -1635,6 +1706,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable1;
     private javax.swing.JMenuItem logoutMenu;
     private javax.swing.JTable newTable;
