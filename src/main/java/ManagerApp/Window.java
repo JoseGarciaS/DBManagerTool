@@ -51,11 +51,13 @@ public class Window extends javax.swing.JFrame {
         refreshMenu.setEnabled(false);
         logoutMenu.setEnabled(false);
         queryPanel.setToolTipText(null);
-        
+        long leido = 0;
         try ( RandomAccessFile file = new RandomAccessFile("info.bin", "rw")) {
-            long leido = 0;
+            
+            System.out.println(file.length());
             while (leido < file.length()) {
-                file.seek(0);
+                System.out.println(leido);
+                file.seek(leido);
                 char user[] = new char[20];
                 char password[] = new char[20];
                 for (int i = 0; i < 20; i++) {
@@ -64,11 +66,13 @@ public class Window extends javax.swing.JFrame {
                 for (int i = 0; i < 20; i++) {
                     password[i] = file.readChar();
                 }
-                leido += 80;
                 User userTemp = new User(user, password);
                 System.out.println(user);
+                System.out.println(password);
                 UsernameField.addItem(Arrays.toString(user).replaceAll("[, | \\u005B | \\u005D]", ""));
                 users.add(userTemp);
+                leido += 80;
+                System.out.println(leido);
             }
         } catch (FileNotFoundException ex) {
             System.out.println(ex.toString());
@@ -77,8 +81,8 @@ public class Window extends javax.swing.JFrame {
         }
         
         try ( RandomAccessFile file = new RandomAccessFile("data.bin", "rw")) {
+            file.seek(0);
             while (file.getFilePointer() < file.length()) {
-                file.seek(0);
                 String path = file.readUTF();
                 String alias = file.readUTF();
                 String user = file.readUTF();
