@@ -369,6 +369,20 @@ public class Window extends javax.swing.JFrame {
         LeftPane1 = new javax.swing.JScrollPane();
         FileTree1 = new javax.swing.JTree();
         RightPane1 = new javax.swing.JPanel();
+        CreateUserScreen = new javax.swing.JPanel();
+        TitleLabel1 = new javax.swing.JLabel();
+        SubLabel1 = new javax.swing.JLabel();
+        CreateUserButton = new javax.swing.JButton();
+        CreatePasswordField = new javax.swing.JPasswordField();
+        CancelCreateButton = new javax.swing.JButton();
+        UserLabel1 = new javax.swing.JLabel();
+        PasswordLabel1 = new javax.swing.JLabel();
+        CreateUserField = new javax.swing.JTextField();
+        HostnameLabel = new javax.swing.JLabel();
+        HostnameField = new javax.swing.JTextField();
+        PathChooserButton = new javax.swing.JButton();
+        DatabaseAliasField = new javax.swing.JTextField();
+        DBAliasLabel = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -654,7 +668,7 @@ public class Window extends javax.swing.JFrame {
             .addGroup(LeftPaneLayout.createSequentialGroup()
                 .addComponent(JTreePane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
         );
 
         SplitPane.setLeftComponent(LeftPane);
@@ -720,7 +734,7 @@ public class Window extends javax.swing.JFrame {
                         .addComponent(viewCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(userCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 539, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         AppScreenLayout.setVerticalGroup(
@@ -734,7 +748,7 @@ public class Window extends javax.swing.JFrame {
                     .addComponent(viewCreate)
                     .addComponent(userCreate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
+                .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE))
         );
 
         Sessions.addTab("Session", AppScreen);
@@ -816,6 +830,163 @@ public class Window extends javax.swing.JFrame {
 
         LayeredPane.add(AppScreen1);
         AppScreen1.setBounds(0, 0, 1280, 720);
+
+        CreateUserScreen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CreateUserScreenMouseClicked(evt);
+            }
+        });
+
+        TitleLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        TitleLabel1.setText("Database Manager Tool");
+        TitleLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TitleLabel1MouseClicked(evt);
+            }
+        });
+
+        SubLabel1.setText("Create user");
+
+        CreateUserButton.setText("Create user");
+        CreateUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateUserButtonActionPerformed(evt);
+            }
+        });
+
+        CreatePasswordField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                CreatePasswordFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                CreatePasswordFieldFocusLost(evt);
+            }
+        });
+        CreatePasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreatePasswordFieldActionPerformed(evt);
+            }
+        });
+        CreatePasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CreatePasswordFieldKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CreatePasswordFieldKeyTyped(evt);
+            }
+        });
+
+        CancelCreateButton.setText("Cancel");
+        CancelCreateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CancelCreateButtonMouseClicked(evt);
+            }
+        });
+        CancelCreateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelCreateButtonActionPerformed(evt);
+            }
+        });
+
+        UserLabel1.setText("Username");
+
+        PasswordLabel1.setText("Password");
+
+        CreateUserField.setPreferredSize(new java.awt.Dimension(64, 22));
+        CreateUserField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateUserFieldActionPerformed(evt);
+            }
+        });
+
+        HostnameLabel.setText("Hostname");
+
+        HostnameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HostnameFieldActionPerformed(evt);
+            }
+        });
+
+        PathChooserButton.setText("...");
+        PathChooserButton.setPreferredSize(new java.awt.Dimension(64, 22));
+
+        DatabaseAliasField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DatabaseAliasFieldActionPerformed(evt);
+            }
+        });
+
+        DBAliasLabel.setText("Database alias");
+
+        javax.swing.GroupLayout CreateUserScreenLayout = new javax.swing.GroupLayout(CreateUserScreen);
+        CreateUserScreen.setLayout(CreateUserScreenLayout);
+        CreateUserScreenLayout.setHorizontalGroup(
+            CreateUserScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CreateUserScreenLayout.createSequentialGroup()
+                .addGroup(CreateUserScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CreateUserScreenLayout.createSequentialGroup()
+                        .addGap(478, 478, 478)
+                        .addComponent(TitleLabel1))
+                    .addGroup(CreateUserScreenLayout.createSequentialGroup()
+                        .addGap(574, 574, 574)
+                        .addComponent(SubLabel1))
+                    .addGroup(CreateUserScreenLayout.createSequentialGroup()
+                        .addGap(456, 456, 456)
+                        .addGroup(CreateUserScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CreateUserField, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UserLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CreatePasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PasswordLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(CreateUserScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(DatabaseAliasField)
+                                .addGroup(CreateUserScreenLayout.createSequentialGroup()
+                                    .addGroup(CreateUserScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(HostnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(HostnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(DBAliasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(PathChooserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(CreateUserScreenLayout.createSequentialGroup()
+                                .addComponent(CancelCreateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(CreateUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(533, Short.MAX_VALUE))
+        );
+        CreateUserScreenLayout.setVerticalGroup(
+            CreateUserScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CreateUserScreenLayout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(TitleLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SubLabel1)
+                .addGap(36, 36, 36)
+                .addComponent(UserLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CreateUserField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(PasswordLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CreatePasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(HostnameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(CreateUserScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(HostnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PathChooserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(DBAliasLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DatabaseAliasField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(72, 72, 72)
+                .addGroup(CreateUserScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CancelCreateButton)
+                    .addComponent(CreateUserButton))
+                .addContainerGap(196, Short.MAX_VALUE))
+        );
+
+        LayeredPane.setLayer(CreateUserScreen, javax.swing.JLayeredPane.DRAG_LAYER);
+        LayeredPane.add(CreateUserScreen);
+        CreateUserScreen.setBounds(0, 0, 1280, 720);
 
         jMenu2.setText("File");
         MenuBar.add(jMenu2);
@@ -1327,6 +1498,58 @@ public class Window extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_newTableKeyTyped
 
+    private void TitleLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TitleLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TitleLabel1MouseClicked
+
+    private void CreateUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateUserButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreateUserButtonActionPerformed
+
+    private void CreatePasswordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CreatePasswordFieldFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreatePasswordFieldFocusGained
+
+    private void CreatePasswordFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CreatePasswordFieldFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreatePasswordFieldFocusLost
+
+    private void CreatePasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreatePasswordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreatePasswordFieldActionPerformed
+
+    private void CreatePasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CreatePasswordFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreatePasswordFieldKeyPressed
+
+    private void CreatePasswordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CreatePasswordFieldKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreatePasswordFieldKeyTyped
+
+    private void CreateUserScreenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CreateUserScreenMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreateUserScreenMouseClicked
+
+    private void CancelCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelCreateButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelCreateButtonActionPerformed
+
+    private void CancelCreateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelCreateButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelCreateButtonMouseClicked
+
+    private void CreateUserFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateUserFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreateUserFieldActionPerformed
+
+    private void HostnameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HostnameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HostnameFieldActionPerformed
+
+    private void DatabaseAliasFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatabaseAliasFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DatabaseAliasFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1366,8 +1589,17 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel AppNameLabel;
     private javax.swing.JPanel AppScreen;
     private javax.swing.JPanel AppScreen1;
+    private javax.swing.JButton CancelCreateButton;
+    private javax.swing.JPasswordField CreatePasswordField;
+    private javax.swing.JButton CreateUserButton;
+    private javax.swing.JTextField CreateUserField;
+    private javax.swing.JPanel CreateUserScreen;
+    private javax.swing.JLabel DBAliasLabel;
+    private javax.swing.JTextField DatabaseAliasField;
     private javax.swing.JTree FileTree;
     private javax.swing.JTree FileTree1;
+    private javax.swing.JTextField HostnameField;
+    private javax.swing.JLabel HostnameLabel;
     private javax.swing.JScrollPane JTreePane;
     private javax.swing.JLayeredPane LayeredPane;
     private javax.swing.JPanel LeftPane;
@@ -1379,6 +1611,8 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JTabbedPane OutPane;
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JLabel PasswordLabel;
+    private javax.swing.JLabel PasswordLabel1;
+    private javax.swing.JButton PathChooserButton;
     private javax.swing.JButton RefreshButton;
     private javax.swing.JPanel RightPane;
     private javax.swing.JPanel RightPane1;
@@ -1387,8 +1621,11 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JSplitPane SplitPane;
     private javax.swing.JSplitPane SplitPane1;
     private javax.swing.JLabel SubLabel;
+    private javax.swing.JLabel SubLabel1;
     private javax.swing.JLabel TitleLabel;
+    private javax.swing.JLabel TitleLabel1;
     private javax.swing.JLabel UserLabel;
+    private javax.swing.JLabel UserLabel1;
     private javax.swing.JComboBox<String> UsernameField;
     private javax.swing.JButton dataCreate;
     private javax.swing.JFrame jFrame1;
