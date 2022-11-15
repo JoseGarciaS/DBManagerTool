@@ -241,7 +241,7 @@
                               <EmptySpace min="-2" pref="456" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="LoginButton" max="32767" attributes="0"/>
-                                  <Component id="UsernameField" max="32767" attributes="0"/>
+                                  <Component id="UserNameField" max="32767" attributes="0"/>
                                   <Component id="UserLabel" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
                                   <Component id="PasswordField" alignment="0" max="32767" attributes="0"/>
                                   <Component id="PasswordLabel" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
@@ -263,7 +263,7 @@
                       <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
                       <Component id="UserLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="UsernameField" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="UserNameField" min="-2" pref="34" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="PasswordLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -320,13 +320,16 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NewUserButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="UsernameField">
+            <Component class="javax.swing.JComboBox" name="UserNameField">
               <Properties>
                 <Property name="editable" type="boolean" value="true"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UserNameFieldActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -799,9 +802,6 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="CreateUserScreenMouseClicked"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JLayeredPane.layer" type="java.lang.Integer" value="400"/>
-          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="0" y="0" width="1280" height="720"/>
